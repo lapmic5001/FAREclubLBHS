@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Contact Form</title>
+        <link rel="stylesheet" type="text/css" href="styles.css" />
+        <style>
+            body {
+                background: url("images/pillars-of-creation-james-webb-image.webp") no-repeat center center fixed;
+                background-position: center 0%; /* Adjust vertical position */
+                background-size: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="sidebar">
+            <input type="text" id="commandInput" placeholder="Enter command" />
+            <div id="commandOutput"></div>
+        </div>
+        <header>
+            <h1>Future Astronauts and Rocket Engineers</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li>
+                        <b
+                            ><strong><a href="contact.html">Contact</a></strong></b
+                        >
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <form id="contactForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" /><br /><br />
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" /><br /><br />
+            <label for="message">Message:</label>
+            <textarea id="message" name="message"></textarea><br />
+            <input type="submit" value="Submit" />
+        </form>
+
+        <footer>
+            <p>2024 Future Astronauts and Rocket Engineers (FARE)</p>
+        </footer>
+
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+                apiKey: "AIzaSyBa013olZzy7-UhWszQFRiEOIRKCkPedEM",
+                authDomain: "fareclublbhs.firebaseapp.com",
+                projectId: "fareclublbhs",
+                storageBucket: "fareclublbhs.appspot.com",
+                messagingSenderId: "187333698756",
+                appId: "1:187333698756:web:8c59a6df8196f2ba30d591",
+                measurementId: "G-D07CJ1PG7Z"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+        </script>
+        <script>
+            var contactForm = document.getElementById("contactForm");
+            contactForm.addEventListener("submit", submitForm);
+
+            function submitForm(e) {
+                e.preventDefault();
+                var name = getInputVal("name");
+                var email = getInputVal("email");
+                var message = getInputVal("message");
+                saveMessage(name, email, message);
+            }
+
+            function getInputVal(id) {
+                return document.getElementById(id).value;
+            }
+
+            var messagesRef = firebase.database().ref("messages");
+            function saveMessage(name, email, message) {
+                var newMessageRef = messagesRef.push();
+                newMessageRef.set({
+                    name: name,
+                    email: email,
+                    message: message
+                });
+            }
+        </script>
+        <script src="script.js"></script>
+    </body>
+</html>
